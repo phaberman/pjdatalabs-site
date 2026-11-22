@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects | PJ Data Labs</title>
+  <meta name="description" content="Retail Weather Pipeline: a dbt, Dagster and BigQuery pipeline that models how weather moves retail demand.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">
+        <img src="img/logo.svg" alt="" width="36" height="36">
+        PJ Data Labs
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="projects.html" aria-current="page">Projects</a>
+        <a href="writing.html">Writing</a>
+        <a href="videos.html">Videos</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="page container">
+      <p class="label">Project 01</p>
+      <h1>Retail Weather Pipeline</h1>
+      <p class="lead">A multi-city retailer wants to know how weather moves demand, so planners can stock up before a heat wave or a storm. This pipeline pulls the weather, models it, and feeds a dashboard.</p>
+      <p class="actions">
+        <a class="link-accent" href="https://github.com/phaberman/retail-weather-pipeline">GitHub repo</a>
+        <a class="link-accent" href="#">Live dashboard</a>
+      </p>
+
+      <div class="placeholder tall">[Dagster lineage screenshot]</div>
+      <p class="caption">The Dagster asset graph, from the API call to the dbt marts.</p>
+
+      <div class="columns">
+        <div class="main prose">
+          <h2>How it works</h2>
+          <p>Every morning at 06:00 UTC, Dagster pulls daily weather for New York, Chicago, Los Angeles, Houston and Seattle from the free Open-Meteo Archive API. Each city lands as a raw JSON file in Cloud Storage, then a loader flattens it to one row per date in BigQuery.</p>
+          <p>dbt takes it from there: a staging view deduplicates on city and date, and three marts sit on top of it for daily weather, monthly city summaries, and weather alerts that score high-impact retail days from 0 to 4.</p>
+
+          <h2>Decisions worth explaining</h2>
+          <p>I defined the Dagster assets by hand instead of using the dbt decorator, so the Python steps before dbt show up in lineage. A custom schema-name macro sends models straight to the staging and marts datasets. And there's one table with city as a column, not a table per city.</p>
+        </div>
+
+        <aside>
+          <h2>Stack</h2>
+          <dl class="stack">
+            <dt>Ingestion</dt><dd>Python</dd>
+            <dt>Storage</dt><dd>Cloud Storage</dd>
+            <dt>Warehouse</dt><dd>BigQuery</dd>
+            <dt>Transform</dt><dd>dbt Core</dd>
+            <dt>Orchestration</dt><dd>Dagster</dd>
+            <dt>Dashboard</dt><dd>Looker Studio</dd>
+          </dl>
+        </aside>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Phillip Haberman · pjdatalabs.dev</span>
+      <ul>
+        <li><a href="https://github.com/phaberman">GitHub</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">[Email]</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

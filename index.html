@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PJ Data Labs | Phillip Haberman, Analytics Engineer</title>
+  <meta name="description" content="Phillip Haberman builds dbt pipelines and dashboards. Portfolio, projects and writing.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">
+        <img src="img/logo.svg" alt="" width="36" height="36">
+        PJ Data Labs
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="writing.html">Writing</a>
+        <a href="videos.html">Videos</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <h1>Analytics engineer building dbt pipelines and dashboards that business owners actually use.</h1>
+      <p class="lead">I've spent five years as a data analyst, most recently running production dbt models for a sports bar in Shanghai. I work mostly in dbt, Dagster, BigQuery, Python and SQL.</p>
+      <a class="link-accent" href="#">Resume (PDF)</a>
+    </section>
+
+    <div class="container">
+      <section class="section">
+        <div class="project">
+          <div>
+            <p class="label">Project 01</p>
+            <h2>Retail Weather Pipeline</h2>
+            <p>How does weather move retail demand? Daily weather for five US cities comes from the Open-Meteo API, lands in Cloud Storage, and gets modeled in dbt on BigQuery into daily, monthly and alert tables. Dagster runs it every morning at 06:00 UTC.</p>
+            <p>
+              <a class="link-accent" href="projects.html">Read more</a>
+              &nbsp;&nbsp;&nbsp;
+              <a class="link-accent" href="https://github.com/phaberman/retail-weather-pipeline">GitHub</a>
+            </p>
+          </div>
+          <div class="placeholder">[Dagster lineage screenshot]</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Writing</h2>
+        <ul class="post-list">
+          <li><a href="posts/what-is-a-data-pipeline.html"><span>What is a data pipeline? A restaurant-kitchen explanation</span><time>[Date]</time></a></li>
+          <li><a href="#"><span>[Weekly article title]</span><time>[Date]</time></a></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Phillip Haberman · pjdatalabs.dev</span>
+      <ul>
+        <li><a href="https://github.com/phaberman">GitHub</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">[Email]</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
