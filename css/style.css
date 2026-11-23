@@ -147,6 +147,8 @@ h2 { font-size: 24px; font-weight: 600; margin: 0 0 12px; }
   text-decoration-thickness: 3px; text-underline-offset: 4px;
 }
 
+/* Real screenshots */
+.screenshot { width: 100%; height: auto; border: 1px solid var(--rule); }
 
 
 /* Smaller screens */
