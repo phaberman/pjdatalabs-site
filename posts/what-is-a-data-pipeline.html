@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>What is a data pipeline? A restaurant-kitchen explanation | PJ Data Labs</title>
-  <meta name="description" content="[One sentence summary of the post.]">
+  <meta name="description" content="A data pipeline moves data from A to B, cleaning and transforming it along the way.">
   <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,12 +33,60 @@
     <article class="page container">
       <div class="post">
         <h1>What is a data pipeline? A restaurant-kitchen explanation</h1>
-        <p class="post-meta"><time datetime="2026-11-22">[Date]</time></p>
+        <p class="post-meta"><time datetime="2026-11-23">November 23, 2026</time></p>
 
-        <p>[Paste your article here. Each paragraph goes in its own p tag.]</p>
+        <img src="../img/data-pipeline-cover.png" alt="What is a data pipeline? Raw data is cleaned and shaped into a report you trust.">
 
-        <h2>[Section heading]</h2>
-        <p>[More text.]</p>
+        <h2>TL;DR</h2>
+        <p>A data pipeline is the process of taking data from a source, cleaning it up, and delivering it somewhere else to be used. A metaphor I like to use is that of a restaurant kitchen. First, a supplier delivers raw ingredients (data sources) to the kitchen. Next, a cook inspects, cleans, and prepares those ingredients (data cleaning). Finally, a chef combines the ingredients to produce a dish (report) that is served to customers.</p>
+
+        <h2>A one sentence definition</h2>
+        <p>A data pipeline is the process of moving data from A to B, while cleaning and transforming it along the way.</p>
+
+        <h2>Why do I keep hearing this term?</h2>
+        <p>Like everything else these days, the answer is AI. Having clean, well-modeled data matters if you want to get quality results using AI. To tie it back into the kitchen metaphor, if you use spoiled tomatoes to make a marinara sauce then the end result will be...not great. How do you get clean, well-modeled data? Data pipelines.</p>
+        <p>According to Google Trends, search interest for 'data pipeline' has 10x'd since 2023. It 3x'd in 2025 and has 4x'd since then.</p>
+        <img src="../img/data-pipeline-trends.png" alt="Google search interest for data pipeline, January 2023 to October 2026. Interest stays near 6 until 2025, then peaks at 100 in February 2026.">
+        <p>What the heck happened in Feb 2026?</p>
+
+        <h2>What a data pipeline can replace in your week</h2>
+        <ul>
+          <li>Exporting the same data from SaaS tools or other sources</li>
+          <li>Copying data from spreadsheet A into spreadsheets B, C, and D</li>
+          <li>Using VLOOKUPs to match names or IDs</li>
+          <li>Formatting the same columns over and over (title casing, trimming whitespace, etc)</li>
+          <li>Finding and removing duplicate rows</li>
+          <li>Filtering or filling in null values</li>
+          <li>Having files called "final_v3.xlsx"</li>
+        </ul>
+
+        <h2>What a pipeline is not</h2>
+        <ul>
+          <li>A report or dashboard. A report is the artifact consumed by a customer - a dish. The pipeline is like the SOP a kitchen follows to produce that dish.</li>
+          <li>Magic. No matter how good the recipe for making pasta primavera is, if the kitchen uses incorrect or spoiled ingredients, the result is going to be terrible. Likewise, if the data feeding the pipeline is wrong, the output is going to be wrong.</li>
+          <li>A one-and-done project. As with a restaurant kitchen whose suppliers or customers change, pipelines need upkeep, evaluation, and change.</li>
+        </ul>
+
+        <h2>Real world example</h2>
+        <p>A restaurant needs to generate a weekly report profit-and-loss statement. Sales come from the POS, labor is in the scheduling software, and inventory costs are in an spreadsheet. Each week, someone has to pull each file, clean them up, and combine them into a report.</p>
+        <p>Whether it's 100% automated or done completely by hand, that process I just described is a data pipeline. The degree to which you automate it, however, depends on your resources and technical skills. For organizations with more resources, the answer is data engineers and tools like Alteryx. For smaller ones, the options are to do it manually in excel or, alternatively, learn Python or SQL to write the scripts yourself.</p>
+
+        <h2>Another way?</h2>
+        <p>Recently, I stumbled upon a tool called <a href="https://flowfile.io/" target="_blank" rel="noopener noreferrer">Flowfile</a>. Flowfile lets you build a data pipeline on a canvas where each node handles some type of transformation, combining operation, aggregation, or output operation.</p>
+        <p>In the pipeline below, I load data from 3 different CSV files that I dropped onto my desktop, join them together, drop unwanted columns, title case all of the text columns, filter out rows with missing values, and output a clean CSV that I can build my weekly report on. This process remains the same every week, all I need to do is click the "run" button or have it run on a schedule (also possible in <a href="https://flowfile.io/" target="_blank" rel="noopener noreferrer">Flowfile</a>).</p>
+        <p>Check out <a href="https://youtu.be/VN2N1pdzS4k" target="_blank" rel="noopener noreferrer">my video walk-through of Flowfile</a>, available on my <a href="https://www.youtube.com/@pj_data_labs" target="_blank" rel="noopener noreferrer">YouTube channel</a>.</p>
+        <img src="../img/data-pipeline-flowfile.png" alt="A Flowfile canvas that loads sales, inventory, and labor, joins them, cleans the columns, and writes a CSV.">
+        <p>Build data pipelines on a canvas with flowfile.io</p>
+
+        <h2>Takeaways</h2>
+        <ol>
+          <li>A data pipeline is a repeatable process that converts raw data into clean data using the same steps each time.</li>
+          <li>It's like a kitchen. Raw ingredients go in, are prepped according to SOPs, and then get served to diners as a finished dish.</li>
+          <li>It's not a report, it's the reproducible steps that allow you to produce a report consistently.</li>
+          <li>Garbage in, garbage out. You might have the best kitchen and top chefs in the world, the output still depends on the quality of the raw ingredients.</li>
+          <li>Pipelines need maintenance as data sources and end-user needs change.</li>
+          <li>You don't need a computer science degree to get started. Pick a simple report you rebuild by hand each week, write down each step, and then see how many of the steps you can automate using a tool like <a href="https://flowfile.io/" target="_blank" rel="noopener noreferrer">Flowfile</a>, Python, or SQL.</li>
+        </ol>
       </div>
     </article>
   </main>
@@ -47,10 +95,9 @@
     <div class="container">
       <span>Phillip Haberman · pjdatalabs.dev</span>
       <ul>
-        <li><a href="https://github.com/phaberman">GitHub</a></li>
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">YouTube</a></li>
-        <li><a href="#">[Email]</a></li>
+        <li><a href="https://github.com/phaberman" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/phillip-haberman/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/@pj_data_labs" target="_blank" rel="noopener noreferrer">YouTube</a></li>
       </ul>
     </div>
   </footer>

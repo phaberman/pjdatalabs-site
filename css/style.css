@@ -76,13 +76,19 @@ h2 { font-size: 24px; font-weight: 600; margin: 0 0 12px; }
 }
 
 /* Writing list */
-.post-list { list-style: none; padding: 0; margin: 0; }
+.post-list { list-style: none; padding: 0; margin: 0; counter-reset: posts; }
+.post-list li { counter-increment: posts; }
 .post-list a {
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
-  padding: 18px 0; border-bottom: 1px solid var(--rule);
+  display: flex; align-items: baseline; gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--rule);
   text-decoration: none; font-size: 18px;
 }
-.post-list time { font-family: var(--font-mono); font-size: 14px; color: var(--muted); }
+.post-list a::before {
+  content: counter(posts, decimal-leading-zero);
+  font-family: var(--font-mono); font-size: 14px; color: var(--muted);
+}
+.post-list a span { flex: 1; }
+.post-list time { font-family: var(--font-mono); font-size: 14px; color: var(--muted); margin-left: auto; }
 
 /* Footer */
 .site-footer { border-top: 1px solid var(--rule); margin-top: 96px; }
