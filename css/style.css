@@ -87,6 +87,8 @@ h2 { font-size: 24px; font-weight: 600; margin: 0 0 12px; }
   content: counter(posts, decimal-leading-zero);
   font-family: var(--font-mono); font-size: 14px; color: var(--muted);
 }
+.post-list a:has(img) { align-items: center; }
+.post-list img { width: 112px; height: 72px; object-fit: cover; flex: none; }
 .post-list a span { flex: 1; }
 .post-list time { font-family: var(--font-mono); font-size: 14px; color: var(--muted); margin-left: auto; }
 

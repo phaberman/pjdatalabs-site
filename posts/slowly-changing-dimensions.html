@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slowly-Changing Dimensions: Design Your Data Warehouse for History | PJ Data Labs</title>
+  <meta name="description" content="SCD Type 1 overwrites old values. SCD Type 2 keeps the history. Here's when to use each.">
+  <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../index.html">
+        <img src="../img/logo.svg" alt="" width="36" height="36">
+        PJ Data Labs
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="../index.html">Home</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../writing.html" aria-current="page">Writing</a>
+        <a href="../videos.html">Videos</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="page container">
+      <div class="post">
+        <h1>Slowly-Changing Dimensions: Design Your Data Warehouse for History</h1>
+        <p class="post-meta"><time datetime="2026-05-28">May 28, 2026</time></p>
+
+        <img src="../img/scd-cover.png" alt="Slowly changing dimensions: Type 1 overwrites old data, Type 2 keeps history.">
+
+        <h2>What are Slowly-Changing Dimensions (SCD)?</h2>
+        <p>Dimensions are attributes that change over time. Think employee titles, customer addresses, or product names. The question isn't if they'll change, but how your data warehouse should handle those changes. Do you overwrite the old value, or keep the history?</p>
+        <p>SCD gives you a framework to answer that question. In this article, we'll walk through SCD Types 1 and 2, see them in action, and learn when to use each.</p>
+
+        <h2>The Problem: Overwriting History</h2>
+        <p>You manage the HR software for your company. On Friday afternoon at 4:59pm you're notified that an employee, John Smith, got promoted with a raise. You're diligent so you immediately update his job title and salary in the system. Done. Off by 5:00pm.</p>
+        <p>As your company thrives, this happens multiple times weekly for the next 6 months. Each time: You get notified, you update the system, off by 5:00.</p>
+        <p>Then a stakeholder emails at 4:59pm on a Friday:</p>
+        <p>URGENT: Need payroll cost changes over the previous 6 months.</p>
+        <p>You open the HR software. GULP. Why? Because every time you updated an employee's record, you overwrote the old values. There's no history. No audit trail. The old data is gone.</p>
+
+        <h2>The Solution: SCD Type 2</h2>
+        <p>Now flip the scenario. Your data warehouse was designed with SCD Type 2 in mind. Instead of overwriting John's old title and salary, the system stores both the old and new values with dates showing when each was active.</p>
+        <p>The stakeholder's urgent email arrives. This time, you pull the historical data in minutes and reply with the exact payroll cost changes. Problem solved. But how? Why?</p>
+
+        <h2>How They Work: Type 1 vs Type 2</h2>
+
+        <h2>SCD Type 1: Overwrite</h2>
+        <p>The screenshot below shows what happens with SCD Type 1. On the left, John Smith's record before the update. On the right, after.</p>
+        <img src="../img/scd-type-1.png" alt="SCD Type 1: John Smith's original title and salary are overwritten with Mid-Level Analyst and 20000.">
+        <p>John Smith's old title and salary have been overwritten.</p>
+        <p>Same number of rows. Same number of columns. The only change is John's new title and salary. The original values are overwritten and lost to history.</p>
+
+        <h2>SCD Type 2: Keep History</h2>
+        <p>The screenshot below shows the same update but with SCD Type 2.</p>
+        <img src="../img/scd-type-2.png" alt="SCD Type 2: John Smith's old row is kept inactive, and a new active row stores his new title and salary.">
+        <p>John Smith's new title and salary have been written to a new row, retaining the historical records.</p>
+        <p>The key differences:</p>
+        <ol>
+          <li>Two rows for John Smith. One row contains his old title and salary. A second row contains his new title and salary.</li>
+          <li>Three new columns. Active From (when the change took effect), Active To (when it ended), and Is Active (which row is current).</li>
+        </ol>
+        <p>Now we have John's previous and current title and salary. Multiply this across multiple employees and multiple changes over time, and you can start answering real business questions: "How has compensation evolved across departments?" or "What's our promotion velocity by role?"</p>
+        <p>In practice, you'd track additional dimensions beyond title and salary such as department, location, or manager assignment. Each change gets recorded as a new row with its own validity dates. Type 2 transforms your dimension table from a snapshot into a historical record.</p>
+
+        <h2>How to query this data</h2>
+        <p>To get John's current title and salary, filter where Is Active = TRUE. This lets you easily answer point-in-time questions: "What was John's salary in March 2025?" Type 1 cannot do this. The data is simply gone.</p>
+
+        <h2>When to Use Each Type?</h2>
+        <p>The choice between Type 1 and Type 2 comes down to a simple question: Do you need to know what changed, or just what is?</p>
+
+        <h2>Type 1: Overwrite</h2>
+        <ul>
+          <li>Historical values don't matter (e.g., employee phone number changes—you only need the current number)</li>
+          <li>Simplicity is a priority</li>
+          <li>Storage is constrained</li>
+        </ul>
+
+        <h2>Type 2: Keep History</h2>
+        <ul>
+          <li>You need audit trails (e.g., "What was John's salary in Q2 2025?")</li>
+          <li>Dimension changes are business-critical to track (e.g., payroll reconciliation, compensation reviews)</li>
+          <li>Compliance or regulatory requirements demand historical records</li>
+        </ul>
+        <p>Type 2 is the safer default. The cost of storing extra rows is negligible compared to the cost of redesigning your warehouse later because stakeholders need historical data you didn't keep.</p>
+
+        <h2>Choose Based on Your Needs</h2>
+
+        <h2>Simplicity vs History</h2>
+        <p>SCD Type 1 and Type 2 represent two fundamentally different design philosophies. Type 1 prioritizes simplicity; Type 2 prioritizes history.</p>
+        <p>Pick a type based on what the business needs, not what's easier to build. A simple Type 1 design might feel like a win until stakeholders ask for historical analysis six months in. Then you're stuck.</p>
+
+        <h2>Upfront Cost vs Headaches Later</h2>
+        <p>Type 2 costs more upfront (extra columns, more rows, slightly more complex queries). But it's cheaper than redesigning your warehouse later because you didn't think about the questions people would ask.</p>
+        <p>The real skill is asking the right questions before you design: Will we ever need to answer "What was it?" If yes, build for Type 2. If you're certain the answer is no, Type 1 is fine.</p>
+
+        <h2>These Aren't Your Only Options</h2>
+        <p>Type 1 and Type 2 are the foundations, but there are others. Type 3, for example, keeps both the current and previous value in the same row (a middle ground between Type 1's simplicity and Type 2's history). It's useful when you only need to track the immediate change, not the full audit trail.</p>
+        <p>For a comprehensive look at all 8 SCD types and when to use each, see the <a href="https://www.kimballgroup.com/wp-content/uploads/2013/08/2013.09-Kimball-Dimensional-Modeling-Techniques11.pdf" target="_blank" rel="noopener noreferrer">Kimball Group's definitive guide</a>.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Phillip Haberman · pjdatalabs.dev</span>
+      <ul>
+        <li><a href="https://github.com/phaberman" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/phillip-haberman/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/@pj_data_labs" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
