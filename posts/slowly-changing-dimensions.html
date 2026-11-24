@@ -42,7 +42,7 @@
         <h1>Slowly-Changing Dimensions: Design Your Data Warehouse for History</h1>
         <p class="post-meta"><time datetime="2026-05-28">May 28, 2026</time></p>
 
-        <img src="../img/scd-cover.png" alt="Slowly changing dimensions: Type 1 overwrites old data, Type 2 keeps history.">
+        <img src="../img/slowly-changing-dimensions-cover.png" alt="Slowly changing dimensions: Type 1 overwrites old data, Type 2 keeps history.">
 
         <h2>What are Slowly-Changing Dimensions (SCD)?</h2>
         <p>Dimensions are attributes that change over time. Think employee titles, customer addresses, or product names. The question isn't if they'll change, but how your data warehouse should handle those changes. Do you overwrite the old value, or keep the history?</p>
@@ -63,13 +63,13 @@
 
         <h2>SCD Type 1: Overwrite</h2>
         <p>The screenshot below shows what happens with SCD Type 1. On the left, John Smith's record before the update. On the right, after.</p>
-        <img src="../img/scd-type-1.png" alt="SCD Type 1: John Smith's original title and salary are overwritten with Mid-Level Analyst and 20000.">
+        <img src="../img/slowly-changing-dimensions-type-1.png" alt="SCD Type 1: John Smith's original title and salary are overwritten with Mid-Level Analyst and 20000.">
         <p>John Smith's old title and salary have been overwritten.</p>
         <p>Same number of rows. Same number of columns. The only change is John's new title and salary. The original values are overwritten and lost to history.</p>
 
         <h2>SCD Type 2: Keep History</h2>
         <p>The screenshot below shows the same update but with SCD Type 2.</p>
-        <img src="../img/scd-type-2.png" alt="SCD Type 2: John Smith's old row is kept inactive, and a new active row stores his new title and salary.">
+        <img src="../img/slowly-changing-dimensions-type-2.png" alt="SCD Type 2: John Smith's old row is kept inactive, and a new active row stores his new title and salary.">
         <p>John Smith's new title and salary have been written to a new row, retaining the historical records.</p>
         <p>The key differences:</p>
         <ol>

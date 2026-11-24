@@ -42,7 +42,7 @@
         <h1>Window Functions: Aggregation Functions</h1>
         <p class="post-meta"><time datetime="2026-06-16">June 16, 2026</time></p>
 
-        <img src="../img/window-cover.png" alt="Window functions: keep your rows, add insight.">
+        <img src="../img/window-functions-aggregation-cover.png" alt="Window functions: keep your rows, add insight.">
 
         <h2>Group By vs Window Functions</h2>
         <p>Group By collapses rows. You get one row per group, and individual row data is gone.</p>
@@ -76,7 +76,7 @@
   revenue,
   sum(revenue) over (order by order_date) as running_total
 from orders</code></pre>
-        <img src="../img/window-running-total.png" alt="A table of daily revenue with a running total: 500, 800, 1500, 1700.">
+        <img src="../img/window-functions-aggregation-running-total.png" alt="A table of daily revenue with a running total: 500, 800, 1500, 1700.">
         <p>Each row shows cumulative revenue up to that date.</p>
 
         <h2>avg</h2>
@@ -88,7 +88,7 @@ from orders</code></pre>
   avg(salary) over (partition by department) as avg_dept_salary,
   salary - avg(salary) over (partition by department) as diff_from_avg
 from employees</code></pre>
-        <img src="../img/window-avg.png" alt="Employees with department average salary and the difference from that average.">
+        <img src="../img/window-functions-aggregation-avg.png" alt="Employees with department average salary and the difference from that average.">
 
         <h2>count</h2>
         <p>Total orders per customer, without losing the order-level rows:</p>
@@ -97,7 +97,7 @@ from employees</code></pre>
   order_id,
   count(*) over (partition by customer_id) as total_orders
 from orders</code></pre>
-        <img src="../img/window-count.png" alt="Each order row includes that customer's total order count.">
+        <img src="../img/window-functions-aggregation-count.png" alt="Each order row includes that customer's total order count.">
 
         <h2>Min / Max</h2>
         <p>Highest salary in each department, attached to every row:</p>
@@ -107,7 +107,7 @@ from orders</code></pre>
   salary,
   max(salary) over (partition by department) as dept_max_salary
 from employees</code></pre>
-        <img src="../img/window-max.png" alt="Each employee row includes the highest salary in their department.">
+        <img src="../img/window-functions-aggregation-max.png" alt="Each employee row includes the highest salary in their department.">
 
         <h2>When to Use Window Aggregations</h2>
         <p>If you find yourself writing a subquery or CTE just to join an aggregate back to individual rows, a window function likely does it in one step.</p>
