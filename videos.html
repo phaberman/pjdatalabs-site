@@ -37,39 +37,38 @@
       <h2>Walkthroughs</h2>
       <ul class="video-grid">
         <li class="video-card">
-          <a href="https://www.youtube.com/watch?v=VN2N1pdzS4k">
+          <button type="button" class="video-play" data-id="VN2N1pdzS4k" aria-label="Play Automate Your Weekly Excel Report with Free, Open-Source ETL">
             <img src="https://i.ytimg.com/vi/VN2N1pdzS4k/hqdefault.jpg" alt="" loading="lazy">
-            <h3>[Video title]</h3>
-            <p>[One-line description]</p>
-          </a>
+          </button>
+          <h3><a href="https://www.youtube.com/watch?v=VN2N1pdzS4k" target="_blank" rel="noopener noreferrer">Automate Your Weekly Excel Report with Free, Open-Source ETL</a></h3>
         </li>
       </ul>
 
       <h2>Shorts</h2>
       <ul class="video-grid">
         <li class="video-card">
-          <a href="https://www.youtube.com/watch?v=7IKY86lTxs0">
+          <button type="button" class="video-play" data-id="7IKY86lTxs0" aria-label="Play 5 Terminal Commands to Find Things">
             <img src="https://i.ytimg.com/vi/7IKY86lTxs0/hqdefault.jpg" alt="" loading="lazy">
-            <h3>[Short title]</h3>
-          </a>
+          </button>
+          <h3><a href="https://www.youtube.com/watch?v=7IKY86lTxs0" target="_blank" rel="noopener noreferrer">5 Terminal Commands to Find Things</a></h3>
         </li>
         <li class="video-card">
-          <a href="https://www.youtube.com/watch?v=IW7T-lbWZkM">
+          <button type="button" class="video-play" data-id="IW7T-lbWZkM" aria-label="Play 5 Terminal Commands to Get Around">
             <img src="https://i.ytimg.com/vi/IW7T-lbWZkM/hqdefault.jpg" alt="" loading="lazy">
-            <h3>[Short title]</h3>
-          </a>
+          </button>
+          <h3><a href="https://www.youtube.com/watch?v=IW7T-lbWZkM" target="_blank" rel="noopener noreferrer">5 Terminal Commands to Get Around</a></h3>
         </li>
         <li class="video-card">
-          <a href="https://www.youtube.com/watch?v=ghWipJfkKek">
+          <button type="button" class="video-play" data-id="ghWipJfkKek" aria-label="Play 5 Terminal Commands for Folders">
             <img src="https://i.ytimg.com/vi/ghWipJfkKek/hqdefault.jpg" alt="" loading="lazy">
-            <h3>[Short title]</h3>
-          </a>
+          </button>
+          <h3><a href="https://www.youtube.com/watch?v=ghWipJfkKek" target="_blank" rel="noopener noreferrer">5 Terminal Commands for Folders</a></h3>
         </li>
         <li class="video-card">
-          <a href="https://www.youtube.com/watch?v=Mrb_hXtqmtw">
+          <button type="button" class="video-play" data-id="Mrb_hXtqmtw" aria-label="Play 5 Terminal Commands You’ll Actually Use">
             <img src="https://i.ytimg.com/vi/Mrb_hXtqmtw/hqdefault.jpg" alt="" loading="lazy">
-            <h3>[Short title]</h3>
-          </a>
+          </button>
+          <h3><a href="https://www.youtube.com/watch?v=Mrb_hXtqmtw" target="_blank" rel="noopener noreferrer">5 Terminal Commands You’ll Actually Use</a></h3>
         </li>
       </ul>
     </div>
@@ -85,6 +84,19 @@
       </ul>
     </div>
   </footer>
+
+<script>
+document.querySelectorAll(".video-play").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var frame = document.createElement("iframe");
+    frame.src = "https://www.youtube-nocookie.com/embed/" + btn.dataset.id + "?autoplay=1";
+    frame.title = btn.getAttribute("aria-label");
+    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    frame.allowFullscreen = true;
+    btn.replaceWith(frame);
+  });
+});
+</script>
 
 </body>
 </html>

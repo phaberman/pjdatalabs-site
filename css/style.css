@@ -120,7 +120,7 @@ h2 { font-size: 24px; font-weight: 600; margin: 0 0 12px; }
 .stack dd { margin: 0; font-family: var(--font-mono); font-size: 15px; }
 
 /* About page sidebar */
-.placeholder.portrait { aspect-ratio: 4 / 5; min-height: 0; margin-bottom: 28px; }
+.placeholder.portrait, img.portrait { aspect-ratio: 4 / 5; min-height: 0; margin-bottom: 28px; object-fit: cover; object-position: center 20%; width: 100%; }
 .contact { list-style: none; margin: 0; padding: 0; font-size: 17px; }
 .contact li { margin: 0 0 8px; }
 .contact li:first-child { margin-bottom: 14px; }
@@ -141,17 +141,22 @@ h2 { font-size: 24px; font-weight: 600; margin: 0 0 12px; }
   list-style: none; margin: 0 0 56px; padding: 0;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 28px;
 }
-.video-card a { display: block; text-decoration: none; }
-.video-card img {
-  width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
-  margin: 0 0 12px; background: var(--placeholder);
+.video-play {
+  display: block; width: 100%; padding: 0; border: 0;
+  margin: 0 0 12px; background: var(--placeholder); cursor: pointer;
 }
+.video-play img, .video-card iframe {
+  width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  border: 0; margin: 0; display: block; background: var(--placeholder);
+}
+.video-card iframe { margin: 0 0 12px; }
 .video-card h3 { font-size: 18px; line-height: 1.35; font-weight: 600; margin: 0 0 6px; }
-.video-card p { font-size: 15px; color: var(--muted); margin: 0; }
-.video-card a:hover h3 {
+.video-card h3 a { text-decoration: none; }
+.video-card h3 a:hover {
   text-decoration: underline; text-decoration-color: var(--amber);
   text-decoration-thickness: 3px; text-underline-offset: 4px;
 }
+.video-card p { font-size: 15px; color: var(--muted); margin: 0; }
 
 /* Real screenshots */
 .screenshot { width: 100%; height: auto; border: 1px solid var(--rule); }
