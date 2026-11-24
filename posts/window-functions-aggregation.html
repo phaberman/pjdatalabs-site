@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Window Functions: Aggregation Functions | PJ Data Labs</title>
+  <meta name="description" content="Window functions compute across a set of rows without collapsing them. Sum, avg, count, min, and max inside over().">
+  <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../index.html">
+        <img src="../img/logo.svg" alt="" width="36" height="36">
+        PJ Data Labs
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="../index.html">Home</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../writing.html" aria-current="page">Writing</a>
+        <a href="../videos.html">Videos</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="page container">
+      <div class="post">
+        <h1>Window Functions: Aggregation Functions</h1>
+        <p class="post-meta"><time datetime="2026-06-16">June 16, 2026</time></p>
+
+        <img src="../img/window-cover.png" alt="Window functions: keep your rows, add insight.">
+
+        <h2>Group By vs Window Functions</h2>
+        <p>Group By collapses rows. You get one row per group, and individual row data is gone.</p>
+        <p>Window functions compute across a set of rows without collapsing them. Every row is returned. The aggregate result is attached to each row.</p>
+        <p>This means you can return an employee's salary and their department average in the same row, without a subquery or a join.</p>
+
+        <h2>Anatomy of a Window Function</h2>
+        <pre><code>function_name() over (
+  partition by column
+  order by column
+  rows between ... and ...
+)</code></pre>
+        <p>Partition by divides rows into groups. The function runs independently within each group. Omit it and the function runs across the entire result set.</p>
+        <p>Order by controls the order of rows within each partition. Required for ranking and running total functions. Optional for pure aggregations.</p>
+        <p>Rows between defines the frame, which rows within the partition are included in the calculation relative to the current row. For example, rows between 2 preceding and current row limits the window to the current row and the two rows before it. If omitted, the default frame runs from the start of the partition to the current row (when order by is present) or includes the entire partition (when order by is absent).</p>
+
+        <h2>The 3 Categories of Window Functions</h2>
+        <ol>
+          <li>Aggregation - run standard aggregate functions (sum, avg, count) across a window without collapsing rows.</li>
+          <li>Ranking - assign a rank or row number to each row within a partition. row_number(), rank(), dense_rank().</li>
+          <li>Value - access data from other rows relative to the current row. lag(), lead(), first_value(), last_value().</li>
+        </ol>
+
+        <h2>Aggregation Functions</h2>
+        <p>These are the standard aggregates you already know, used inside an over() clause.</p>
+
+        <h2>sum</h2>
+        <p>Running total of revenue by date:</p>
+        <pre><code>select
+  order_date,
+  revenue,
+  sum(revenue) over (order by order_date) as running_total
+from orders</code></pre>
+        <img src="../img/window-running-total.png" alt="A table of daily revenue with a running total: 500, 800, 1500, 1700.">
+        <p>Each row shows cumulative revenue up to that date.</p>
+
+        <h2>avg</h2>
+        <p>Department average alongside each employee's individual salary:</p>
+        <pre><code>select
+  employee_name,
+  department,
+  salary,
+  avg(salary) over (partition by department) as avg_dept_salary,
+  salary - avg(salary) over (partition by department) as diff_from_avg
+from employees</code></pre>
+        <img src="../img/window-avg.png" alt="Employees with department average salary and the difference from that average.">
+
+        <h2>count</h2>
+        <p>Total orders per customer, without losing the order-level rows:</p>
+        <pre><code>select
+  customer_id,
+  order_id,
+  count(*) over (partition by customer_id) as total_orders
+from orders</code></pre>
+        <img src="../img/window-count.png" alt="Each order row includes that customer's total order count.">
+
+        <h2>Min / Max</h2>
+        <p>Highest salary in each department, attached to every row:</p>
+        <pre><code>select
+  employee_name,
+  department,
+  salary,
+  max(salary) over (partition by department) as dept_max_salary
+from employees</code></pre>
+        <img src="../img/window-max.png" alt="Each employee row includes the highest salary in their department.">
+
+        <h2>When to Use Window Aggregations</h2>
+        <p>If you find yourself writing a subquery or CTE just to join an aggregate back to individual rows, a window function likely does it in one step.</p>
+        <pre><code>-- without window functions
+select e.employee_name, e.salary, d.avg_salary
+from employees e
+join (
+  select department, avg(salary) as avg_salary
+  from employees
+  group by department
+) d on e.department = d.department
+
+-- with window functions
+select
+  employee_name,
+  salary,
+  avg(salary) over (partition by department) as avg_salary
+from employees</code></pre>
+        <p>Same result. Less code. No join.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Phillip Haberman · pjdatalabs.dev</span>
+      <ul>
+        <li><a href="https://github.com/phaberman" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/phillip-haberman/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/@pj_data_labs" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
